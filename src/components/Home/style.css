@@ -1,0 +1,40 @@
+.home_page {
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+    background: linear-gradient(to bottom right, #13d6da, #6a8ff3);
+    padding-top: 20px;
+}
+
+.home_page_content_div {
+    margin-top: 30px;
+}
+
+.home_page_content_div p {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.home_page_content_div h1 {
+    margin-top: 0;
+}
+
+.sign_in_link,
+.sign_up_link {
+    background-color: white;
+    color: black;
+    display: block;
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    text-decoration: none;
+    border-radius: 20px;
+    width: 140px
+}
+
+.home_page_button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
