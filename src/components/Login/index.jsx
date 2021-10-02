@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import "./login.css";
+import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-// import { connect } from "react-redux";
-// import { adminLogin, salesLogin } from "../../actions";
+import { userLogin } from "../../actions";
 
-const Login = ({ adminSignedIn, salesSignedIn }) => {
+const Login = ({ allUsers, loginStatus, userLoggedIn }) => {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-  const [isAdmin, setIsAdmin] = useState(true);
-  const [loginStatus, setLoginStatus] = useState(
-    localStorage.getItem("loginStatus") || false
-  );
-  const history = useHistory();
+
+  const history = useHistory()
+
 
   if (loginStatus !== "false") {
     localStorage.setItem("loginStatus", loginStatus);
@@ -19,27 +17,27 @@ const Login = ({ adminSignedIn, salesSignedIn }) => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    console.log(allUsers);
     console.log(loginEmail, loginPassword);
-    if (isAdmin) {
-      if (loginEmail === "test-admin" && loginPassword === "test-admin") {
-        setLoginStatus(true);
-        localStorage.setItem("loginStatus", true);
-        localStorage.setItem("adminLogin", true);
-        history.push("/admin/add_medicine");
-        adminSignedIn();
-      } else {
-        alert("Invalid credentials!");
-      }
+
+    var foundUser = allUsers.filter((obj) => obj.userEmail === loginEmail);
+    console.log(foundUser);
+    if (foundUser.length === 0) {
+      alert("User does not exist!");
+    } else if (
+      foundUser[0].userPassword === loginPassword &&
+      foundUser[0].userEmail === loginEmail
+    ) {
+      // setLoginStatus("true");
+      userLoggedIn(foundUser[0])
+      console.log(foundUser[0])
+      localStorage.setItem('currentUser', JSON.stringify(foundUser));
+      localStorage.setItem('loginStatus', JSON.stringify(true));
+      history.push("/listing");
+
+
     } else {
-      if (loginEmail === "test-sales" && loginPassword === "test-sales") {
-        setLoginStatus(true);
-        localStorage.setItem("loginStatus", true);
-        localStorage.setItem("salesLogin", true);
-        history.push("/sales_executive/create_order");
-        salesSignedIn();
-      } else {
-        alert("Invalid credentials!");
-      }
+      alert("Invalid Credentials!");
     }
   };
 
@@ -78,11 +76,12 @@ const Login = ({ adminSignedIn, salesSignedIn }) => {
   );
 };
 
-// const mapDispatchToProps = (dispatch) => ({
-//   adminSignedIn: () => dispatch(adminLogin("")),
-//   salesSignedIn: () => dispatch(salesLogin("")),
-// });
+const mapStateToProps = (state) => ({
+  allUsers: state.allUsers,
+  loginStatus: state.loginStatus
+});
 
-// export default connect(null, mapDispatchToProps)(Login);
-
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  userLoggedIn: (payload) => dispatch(userLogin(payload))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

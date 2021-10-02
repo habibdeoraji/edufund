@@ -6,7 +6,6 @@ const Home = () => {
   return (
     <div className="home_page">
       <img
-        // src="https://pbs.twimg.com/profile_images/1377236428329918465/vyAUrnCA_400x400.jpg"
         src="https://cdn.iconscout.com/icon/premium/png-256-thumb/demo-674987.png"
         alt=""
         style={{ marginTop: "10px" }}
@@ -21,6 +20,9 @@ const Home = () => {
         </Link>
         <Link to="/signup" className="sign_up_link">
           Sign Up
+        </Link>
+        <Link to="/listing" className="mutual_fund_listing_link">
+          Mutual Fund Listing
         </Link>
       </div>
     </div>

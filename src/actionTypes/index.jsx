@@ -1,0 +1,4 @@
+export const USER_LOGIN = 'USER_LOGIN';
+export const USER_LOGOUT = 'USER_LOGOUT';
+export const UPDATE_USER_DETAILS = 'UPDATE_USER_DETAILS';
+export const USER_FORM_EDIT = "USER_FORM_EDIT";

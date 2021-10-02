@@ -1,0 +1,10 @@
+.listing_header {
+    background-color: lightgray;
+    padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.listing_header span {
+    margin: 0 10px;
+}
