@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import ListingHeader from "../ListingPage/ListingHeader";
 import { connect } from "react-redux";
 import UpdateUserProfile from "./UpdateUserProfile";
-import { userFormEdit } from "../../actions";
+import { userFormEdit } from "../../Redux/actions";
+import "./userProfile.css"
 
 const UserProfile = ({ currentUser, isUserFormUpdate, userFormEditMode }) => {
   const {
@@ -12,7 +13,7 @@ const UserProfile = ({ currentUser, isUserFormUpdate, userFormEditMode }) => {
     userGender,
     userName,
     userPassword,
-  } = currentUser[0] || JSON.parse(localStorage.getItem("currentUser"))[0];
+  } = currentUser || JSON.parse(localStorage.getItem("currentUser"))[0];
 
   // User details form for update
   const userDetailsForm = (e) => {
@@ -23,42 +24,42 @@ const UserProfile = ({ currentUser, isUserFormUpdate, userFormEditMode }) => {
   };
 
   return (
-    <div>
+    <div style={{ height: "100vh" }}>
       <ListingHeader />
       {isUserFormUpdate && <UpdateUserProfile currentUser={currentUser} />}
       {!isUserFormUpdate && (
-        <div style={{ textAlign: "left", width: "60vw", margin: "20px auto" }}>
+        <div className="user_info_container" style={{ textAlign: "left" }}>
           <div>
             <p>
-              Name: <span>{userName}</span>
+              <span className="user_info_value">Name:</span> {userName}
             </p>
           </div>
           <div>
             <p>
-              Email: <span>{userEmail}</span>
+              <span className="user_info_value">Email:</span>{userEmail}
             </p>
           </div>
           <div>
             <p>
-              Mobile: <span>{contactNumber}</span>
+              <span className="user_info_value">Mobile:</span>{contactNumber}
             </p>
           </div>
           <div>
             <p>
-              Gender: <span>{userGender}</span>
+              <span className="user_info_value">Gender:</span>{userGender}
             </p>
           </div>
           <div>
             <p>
-              DOB: <span>{userDob}</span>
+              <span className="user_info_value">DOB:</span>{userDob}
             </p>
           </div>
           <div>
             <p>
-              Password: <span>{userPassword}</span>
+              <span className="user_info_value">Password:</span>{userPassword}
             </p>
           </div>
-          <button onClick={userDetailsForm}>Update Details</button>
+          <button onClick={userDetailsForm} className="update_details_button">Update Details</button>
         </div>
       )}
     </div>

@@ -1,5 +1,82 @@
+/* Signup Header */
+.signup_header {
+    margin-top: 0px;
+    margin-bottom: 10vh;
+    padding: 10px;
+    font-size: 1.8rem;
+    text-align: center
+}
+
+/* User Detail step */
+.signup_steps_count,
+.signup_steps_details {
+    width: 90%;
+    margin: 2px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.signup_steps_details {
+    justify-content: space-around;
+
+}
+
+.user_details_step {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.horizontal_line_0 {
+    display: inline-block;
+    height: 2px;
+    width: 33%;
+    background-color: gray
+}
+
+.step_count {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    align-items: center;
+    text-align: center;
+    border: 1px solid gray;
+    border-radius: 50%
+}
+
+
+/* Change Progress on Each Step */
+.current_step_1,
+.current_step_2,
+.current_step_3 {
+    color: blue;
+    /* border-color: blue; */
+}
+
+.current_step_1_circle,
+.current_step_2_circle,
+.current_step_3_circle {
+    background-color: blue;
+    color: white;
+    border-color: blue;
+}
+
+.horizontal_line_1,
+.horizontal_line_2 {
+    display: inline-block;
+    height: 2px;
+    width: 33%;
+    background-color: blue
+}
+
+
+/* --------- */
+
 .signup_form {
-    background-image: url('../../utils/background_signup3.jpg');
+    /* background-image: url('../../utils/background_signup3.jpg'); */
+    background: linear-gradient(#dafcea, rgb(178, 180, 178));
     height: 100vh;
     background-repeat: no-repeat;
     background-size: cover;
@@ -11,8 +88,8 @@
 .signup_form_container {
     width: 80%;
     padding: 10px;
-    margin: 10vh auto;
-    height: 50vh;
+    margin: 5vh auto;
+    height: 40vh;
     border: 1px solid white;
     border-radius: 10px;
     background-color: rgb(252, 252, 252);
@@ -20,10 +97,23 @@
 
 }
 
+/* Confirm Details */
+.confirm_signup_details {
+    text-align: left;
+}
+
+.user_data_value {
+    display: inline-block;
+    width: 70px;
+    font-weight: bold;
+    margin-left: 10%;
+    margin-top: 5px;
+}
+
 .input_field_signup {
     padding: 20px;
     text-align: center;
-    margin-top: 10px !important;
+    margin-top: 16px !important;
     width: 80%;
     padding-left: 20px
 }
@@ -33,24 +123,30 @@
 .prev_button,
 .submit_button {
     font-size: 1rem;
-    background-color: rgb(58, 169, 189);
+    background-color: #4381FF;
     border-radius: 10px;
     padding: 10px 20px;
     border: none;
     color: white;
-    width: 150px;
+    width: 130px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .prev_button {
-    background-color: gray;
+    background-color: rgb(182, 3, 3);
 }
 
-.submit_button {
-    background-color: green
-}
+
 
 .card-footer {
     text-align: center !important
+}
+
+/* SignUp Button Container */
+.signup_button_container {
+    width: 80%;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 0 auto;
 }

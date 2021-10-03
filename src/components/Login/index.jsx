@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import "./login.css";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { userLogin } from "../../actions";
+import { userLogin } from "../../Redux/actions";
 
 const Login = ({ allUsers, loginStatus, userLoggedIn }) => {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
-  const history = useHistory()
-
+  const history = useHistory();
 
   if (loginStatus !== "false") {
     localStorage.setItem("loginStatus", loginStatus);
@@ -28,39 +27,47 @@ const Login = ({ allUsers, loginStatus, userLoggedIn }) => {
       foundUser[0].userPassword === loginPassword &&
       foundUser[0].userEmail === loginEmail
     ) {
-      // setLoginStatus("true");
-      userLoggedIn(foundUser[0])
-      console.log(foundUser[0])
-      localStorage.setItem('currentUser', JSON.stringify(foundUser));
-      localStorage.setItem('loginStatus', JSON.stringify(true));
+      userLoggedIn(foundUser[0]);
+      console.log(foundUser[0], "Testing Current User");
+      localStorage.setItem("currentUser", JSON.stringify(foundUser[0]));
+      localStorage.setItem("loginStatus", JSON.stringify(true));
       history.push("/listing");
-
-
     } else {
       alert("Invalid Credentials!");
     }
   };
 
   return (
-    <div className="login-body">
+    <div className="login_body">
+      <i
+        className="fas fa-arrow-left left_arrow"
+        onClick={() => {
+          history.push("/");
+        }}
+      ></i>
+      <br />
+
+      <div className="login_user_icon_wrapper">
+        <i className="far fa-user-circle login_user_icon"></i>
+      </div>
       <form className="login-form" onSubmit={handleLogin}>
-        <h1>Login</h1>
-        <div className="form-group form_group">
+        <h3>Login to your account</h3>
+        <div className="form_group">
           <label>Username </label>
           <input
             type="text"
-            className="form-control"
+            className="login_input"
             placeholder="Enter username"
             required
             onChange={(eVal) => setLoginEmail(eVal.target.value)}
           />
         </div>
 
-        <div className="form-group form_group">
+        <div className="form_group">
           <label>Password</label>
           <input
             type="password"
-            className="form-control"
+            className="login_input"
             placeholder="Enter password"
             required
             onChange={(pVal) => {
@@ -68,20 +75,31 @@ const Login = ({ allUsers, loginStatus, userLoggedIn }) => {
             }}
           />
         </div>
-        <button type="submit" className="btn btn-primary btn-block">
+        <button type="submit" className="login_button">
           Submit
         </button>
       </form>
+      <p style={{ textAlign: "center", marginTop: "20px" }}>
+        Don't have an account?{" "}
+        <span
+          style={{ color: "blue", cursor: "pointer" }}
+          onClick={() => {
+            history.push("/signup");
+          }}
+        >
+          SignUp
+        </span>
+      </p>
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
   allUsers: state.allUsers,
-  loginStatus: state.loginStatus
+  loginStatus: state.loginStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  userLoggedIn: (payload) => dispatch(userLogin(payload))
-})
+  userLoggedIn: (payload) => dispatch(userLogin(payload)),
+});
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
-import ListingHeader from '../ListingPage/ListingHeader';
 import { connect } from "react-redux";
 import "./userProfile.css";
-import { updateUserDetails } from "../../actions"
+import { updateCurrentUserDetails } from "../../Redux/actions";
 
 
 
-const UserProfile = ({ currentUser, update_user_details }) => {
+const UserProfile = ({ currentUser, isUserFormUpdate, allUsers, update_current_user_details }) => {
     const { contactNumber,
         userDob,
         userEmail,
         userGender,
         userName,
         userPassword,
-    } = currentUser[0] || JSON.parse(localStorage.getItem('currentUser'))
+    } = currentUser || JSON.parse(localStorage.getItem('currentUser'))
+
+
 
 
     const [updatedFullName, setUpdatedFullName] = useState(userName)
@@ -25,7 +26,7 @@ const UserProfile = ({ currentUser, update_user_details }) => {
     const handleUserDetailsUpdate = (e) => {
         e.preventDefault();
 
-        var allUsersListAfterUpdate = JSON.parse(localStorage.getItem('allUsers')) || [];
+        var allUsersListAfterUpdate = allUsers || [];
         const indexForUpdate = allUsersListAfterUpdate.findIndex(item => item.userEmail === userEmail
         )
         console.log(indexForUpdate)
@@ -33,11 +34,13 @@ const UserProfile = ({ currentUser, update_user_details }) => {
         console.log(allUsersListAfterUpdate)
         allUsersListAfterUpdate[indexForUpdate].userName = updatedFullName;
         allUsersListAfterUpdate[indexForUpdate].contactNumber = updatedContactNumber;
-        allUsersListAfterUpdate[indexForUpdate].dob = updatedDob;
+        allUsersListAfterUpdate[indexForUpdate].userDob = updatedDob;
+        allUsersListAfterUpdate[indexForUpdate].userPassword = updatedUserPassword;
         localStorage.setItem('allUsers', JSON.stringify(allUsersListAfterUpdate));
         localStorage.setItem('currentUser', JSON.stringify(allUsersListAfterUpdate[indexForUpdate]));
         localStorage.setItem('isUserFormUpdate', false)
-        update_user_details([allUsersListAfterUpdate[indexForUpdate]])
+        console.log(allUsersListAfterUpdate[indexForUpdate], "Updated User")
+        update_current_user_details({ allUsers: allUsersListAfterUpdate, currentUser: allUsersListAfterUpdate[indexForUpdate] })
 
     }
 
@@ -46,19 +49,19 @@ const UserProfile = ({ currentUser, update_user_details }) => {
 
 
     return (<div>
-        <div style={{ textAlign: 'left', width: "60vw", margin: "10px auto" }} className="add_executive_details_container">
-            <form className="add_executive_form" onSubmit={handleUserDetailsUpdate} >
+        {isUserFormUpdate && <div style={{ textAlign: 'left', width: "70vw", margin: "10px auto" }} className="update_user_details_container">
+            <form className="update_user_form" onSubmit={handleUserDetailsUpdate} >
                 <div className="form-group">
                     <label htmlFor="userName">Full Name</label> <br />
-                    <input type="text" className="form-control" id="fullname" placeholder="First name" onChange={(e) => { setUpdatedFullName(e.target.value) }} value={updatedFullName} required />
+                    <input type="text" className="form-control" id="fullname" placeholder="Full Name" onChange={(e) => { setUpdatedFullName(e.target.value) }} value={updatedFullName} required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="userEmail">Email</label><br />
-                    <input type="email" className="form-control" id="userEmail" placeholder="Last Name" disabled />
+                    <input type="email" className="form-control" id="userEmail" placeholder="Email" value={userEmail} disabled />
                 </div>
                 <div className="form-group">
                     <label htmlFor="Dob">DOB</label><br />
-                    <input type="Date" className="form-control" id="Dob" placeholder="dob" onChange={(e) => { setUpdatedDob(e.target.value) }} value={userDob} />
+                    <input type="Date" className="form-control" id="Dob" placeholder="dob" onChange={(e) => { setUpdatedDob(e.target.value) }} value={updatedDob} />
                 </div>
                 <div className="form-group">
                     <label htmlFor="Gender">Gender(M/F)</label><br />
@@ -78,16 +81,21 @@ const UserProfile = ({ currentUser, update_user_details }) => {
                         setUpdatedUserPassword(e.target.value)
                     }} value={updatedUserPassword} required />
                 </div>
-                <button type="submit" className="btn btn-primary" >Save Details</button>
+                <button type="submit" className="save_details_button" >Save Details</button>
             </form>
-        </div>
+        </div>}
     </div >);
 }
 
 
 const mapDispatchToProps = (dispatch) => ({
-    update_user_details: (payload) => dispatch(updateUserDetails(payload))
+    update_current_user_details: (payload) => dispatch(updateCurrentUserDetails(payload))
 })
 
+const mapStateToProps = (state) => ({
+    isUserFormUpdate: state.isUserFormUpdate,
+    allUsers: state.allUsers
+});
 
-export default connect(null, mapDispatchToProps)(UserProfile);
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

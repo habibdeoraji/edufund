@@ -1,4 +1,4 @@
-import { USER_LOGIN, USER_LOGOUT, UPDATE_USER_DETAILS, USER_FORM_EDIT } from "../actionTypes"
+import { USER_LOGIN, USER_LOGOUT, USER_FORM_EDIT, UPDATE_CURRENT_USER_DETAILS } from "../actionTypes"
 
 export const userLogin = (payload) => ({
     type: USER_LOGIN,
@@ -11,10 +11,11 @@ export const userLogout = (payload) => ({
 })
 
 
-export const updateUserDetails = (payload) => ({
-    type: UPDATE_USER_DETAILS,
+export const updateCurrentUserDetails = (payload) => ({
+    type: UPDATE_CURRENT_USER_DETAILS,
     payload
 })
+
 
 export const userFormEdit = (payload) => ({
     type: USER_FORM_EDIT,

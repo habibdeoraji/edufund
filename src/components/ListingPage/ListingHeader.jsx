@@ -2,14 +2,13 @@ import React from 'react';
 import "./listing.css";
 import { connect } from "react-redux";
 import { useHistory } from 'react-router-dom';
-import { userLogout } from "../../actions"
+import { userLogout } from "../../Redux/actions"
 
 
 
 
 const ListingHeader = ({ userLoggedOut }) => {
     const history = useHistory()
-    // const loginStatus = localStorage.getItem('LoginStatus')
     const loginStatus = JSON.parse(localStorage.getItem('allUsers'))
     console.log(loginStatus, 123);
 
@@ -19,6 +18,7 @@ const ListingHeader = ({ userLoggedOut }) => {
         {loginStatus && <span onClick={() => {
             userLoggedOut(false)
             localStorage.setItem('loginStatus', false);
+            localStorage.setItem('isUserFormUpdate', false);
             history.push('/login')
             localStorage.setItem('currentUser', JSON.stringify(null));
         }}>Logout</span>}

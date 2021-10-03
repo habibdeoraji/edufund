@@ -4,9 +4,8 @@ import ListingHeader from './ListingHeader';
 import MutualFundDetails from "./../MutualFundDetails/index"
 
 const ListingPage = ({ loginStatus }) => {
-    return (<div>
+    return (<div style={{ height: "100vh", backgroundColor: "lightgrey" }}>
         <ListingHeader />
-        This is listing Page
         <MutualFundDetails />
     </div>);
 }

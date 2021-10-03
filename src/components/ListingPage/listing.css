@@ -1,9 +1,13 @@
 .listing_header {
-    background-color: lightgray;
-    padding: 10px;
+    background-color: rgb(53, 215, 255);
+    padding: 15px 10px;
     display: flex;
     justify-content: flex-end;
+    font-size: 1.1em;
+    font-weight: bold
 }
+
+
 
 .listing_header span {
     margin: 0 10px;

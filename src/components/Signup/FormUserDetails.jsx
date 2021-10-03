@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-// import SignupForm from "./SignupForm";
 import { TextField } from "@material-ui/core";
-import FormHeader from "./FormHeader";
 
 class FormUserDetails extends Component {
   continue = (e) => {
@@ -14,25 +12,33 @@ class FormUserDetails extends Component {
 
     return (
       <React.Fragment>
-        <FormHeader />
         <div className="signup_form_container">
           <TextField
             className="input_field_signup"
             label="First name"
             onChange={handleChange("firstName")}
             defaultValue={values.firstName}
+            size="small"
+            variant="outlined"
+            required
           />
           <TextField
             className="input_field_signup"
             label="Last name"
             onChange={handleChange("lastName")}
             defaultValue={values.lastName}
+            size="small"
+            variant="outlined"
+            required
           />
           <TextField
             className="input_field_signup"
             label="Email"
             onChange={handleChange("email")}
             defaultValue={values.email}
+            variant="outlined"
+            size="small"
+            required
             type="email"
           />
           <TextField
@@ -40,6 +46,8 @@ class FormUserDetails extends Component {
             label="Password"
             onChange={handleChange("password")}
             defaultValue={values.password}
+            variant="outlined"
+            size="small"
             required
             type="password"
           />

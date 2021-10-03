@@ -1,16 +1,19 @@
 import React, { Component } from "react";
 import FormUserDetails from "./FormUserDetails";
 import FormPersonalDetails from "./FormPersonalDetails";
-import ConfirmAllDetails from "./ConfirmAllDetails"
+import ConfirmAllDetails from "./ConfirmAllDetails";
+import { withRouter } from "react-router-dom";
+import { validate, res } from 'react-email-validator';
 import "./signup.css"
 import {
   Form,
   Button,
   CardFooter
 } from "reactstrap";
-import SignupSucces from "./SignupSucces";
+import FormHeader from "./FormHeader";
 
 export class SignupForm extends Component {
+
 
   state = {
     currentStep: 1,
@@ -26,12 +29,23 @@ export class SignupForm extends Component {
 
   // Proceed to next step
   nextStep = () => {
-    const { currentStep, email, firstName, lastName, password, gender, dob } = this.state;
+    const { currentStep, email, firstName, lastName, password, gender, dob, contactNumber } = this.state;
 
     if ((currentStep === 1) && (email === "" || password === "" || firstName === "" || lastName === "")) {
       alert("Please enter all the details")
-    } else if ((currentStep === 2) && (gender === "" || dob === "")) {
+    } else if (currentStep === 1 && email !== "") {
+      validate(email); // true
+      if (res) {
+        console.log("Valid Email")
+        this.setState({ currentStep: currentStep + 1 })
+      } else {
+        alert("Invalid email")
+      }
+    }
+    else if ((currentStep === 2) && (gender === "" || dob === "" || contactNumber === "")) {
       alert("Please enter all required fields.")
+    } else if (currentStep === 2 && (gender !== "Male" && gender !== "Female" && gender !== "Other")) {
+      alert("Invalid gender")
     }
     else {
       this.setState({ currentStep: currentStep + 1 })
@@ -64,7 +78,7 @@ export class SignupForm extends Component {
     // New user Details
     const userDetails = {
       userName: `${firstName} ${lastName}`, contactNumber: mobileNumber,
-      userEmail: email, userPassword: password, userGender: gender, useDob: dob, userId: Math.floor((Math.random() * 100000000) + 1)
+      userEmail: email, userPassword: password, userGender: gender, userDob: dob, userId: Math.floor((Math.random() * 100000000) + 1)
     }
 
     // Getting All users list from local storage
@@ -77,7 +91,6 @@ export class SignupForm extends Component {
     } else {
       allUsers.push(userDetails);
       localStorage.setItem('allUsers', JSON.stringify(allUsers));
-      // Redirect to login Page
       window.location.href = "/login"
     }
 
@@ -101,7 +114,6 @@ export class SignupForm extends Component {
 
   nextButton() {
     let currentStep = this.state.currentStep;
-    // If the current step is not 3, then render the "next" button
     if (currentStep < 3) {
       return (
         <Button color="primary float-right" onClick={this.nextStep} className="next_button">
@@ -114,7 +126,6 @@ export class SignupForm extends Component {
   submitButton() {
     let currentStep = this.state.currentStep;
 
-    // If the current step is the last step, then render the "submit" button
     if (currentStep > 2) {
       return <button color="primary float-right" className="submit_button" onSubmit={this.handleSubmit}>Submit</button>;
     }
@@ -129,6 +140,7 @@ export class SignupForm extends Component {
     return (
 
       <div className="signup_form">
+        <FormHeader currentStep={currentStep} />
         <Form onSubmit={this.handleSubmit} >
           {currentStep === 1 && <FormUserDetails
             currentStep={this.currentStep}
@@ -152,15 +164,26 @@ export class SignupForm extends Component {
             values={values}
           />}
 
-          <CardFooter>
+          <CardFooter className="signup_button_container">
             {this.previousButton()}
             {this.nextButton()}
             {this.submitButton()}
           </CardFooter>
         </Form>
+        <p style={{ textAlign: "center", marginTop: "20px" }}>
+          Already have an account?{" "}
+          <span
+            style={{ color: "blue", cursor: "pointer" }}
+            onClick={() => {
+              this.props.history.push("/login");
+            }}
+          >
+            Login
+        </span>
+        </p>
       </div>
     )
   }
 }
 
-export default SignupForm;
+export default withRouter(SignupForm);

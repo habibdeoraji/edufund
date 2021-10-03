@@ -21,9 +21,6 @@ const Home = () => {
         <Link to="/signup" className="sign_up_link">
           Sign Up
         </Link>
-        <Link to="/listing" className="mutual_fund_listing_link">
-          Mutual Fund Listing
-        </Link>
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import FormHeader from "./FormHeader";
 
 export class ConfirmAllDetails extends Component {
   continue = (e) => {
@@ -23,48 +22,27 @@ export class ConfirmAllDetails extends Component {
     } = this.props.values;
     return (
       <React.Fragment>
-        <FormHeader />
         <div
-          style={{
-            padding: "10px",
-            textAlign: "left",
-            marginTop: "60px",
-            marginLeft: "20%",
-          }}
+          className="signup_form_container confirm_signup_details"
         >
           <div className="user_data">
             <p>
-              <span>Name: </span> {firstName} {lastName}
+              <span className="user_data_value">Name: </span> {firstName} {lastName}
             </p>
             <p>
-              <span>Email: </span> {email}
+              <span className="user_data_value">Email: </span> {email}
             </p>
             <p>
-              <span>Contact: </span> {mobileNumber}
+              <span className="user_data_value">Contact: </span> {mobileNumber}
             </p>
             <p>
-              <span>Gender: </span> {gender}
+              <span className="user_data_value">Gender: </span> {gender}
             </p>
             <p>
-              <span>DOB: </span> {dob}
+              <span className="user_data_value">DOB: </span> {dob}
             </p>
           </div>
-
           <br />
-          {/* <button
-            className="continue_button"
-            style={{ marginTop: "20px" }}
-            onClick={this.continue}
-          >
-            Confirm & Continue
-          </button>
-          <button
-            className="continue_button"
-            style={{ marginTop: "20px", marginLeft: "10px" }}
-            onClick={this.back}
-          >
-            Back
-          </button> */}
         </div>
       </React.Fragment>
     );

@@ -15,17 +15,15 @@ class Home extends Component {
     componentDidMount() {
         axios.get("https://api.mfapi.in/mf").then((res) => {
             this.setState({ mutualFundList: res.data });
-            // this.setState({ searchMutualFundList: res.data });
+
         });
     }
 
 
     searchOnChange = (e) => {
-        // console.log(e.target.value)
         const { mutualFundList } = this.state;
         const searchInput = e.target.value;
         if (searchInput.length === 0) {
-            // console.log(searchInput.length, "hello")
             this.setState({ searchMutualFundList: mutualFundList })
         } else {
             const newList = [];
@@ -33,7 +31,6 @@ class Home extends Component {
                 (mutualfund.schemeName.toLowerCase().search(searchInput.toLowerCase()) >= 0 &&
                     newList.push(mutualfund))
             })
-            // console.log(newList, "New List");
             this.setState({ searchMutualFundList: newList })
 
         }
@@ -41,40 +38,34 @@ class Home extends Component {
 
     render() {
         const { searchMutualFundList, mutualFundList } = this.state;
-        // console.log(searchMutualFundList);
         return (
             <div style={{ width: "80vw", margin: "30px auto 10px auto" }}>
-                <input style={searchInputStyle} placeholder="Search by Scheme Name" onChange={this.searchOnChange} />
+                {searchMutualFundList.length === 0 && mutualFundList.length === 0 && (
+                    <div style={{ width: "100vw", textAlign: "center" }}>
+                        <img
+                            src="https://cutewallpaper.org/21/loading-gif-transparent-background/Tag-For-Loading-Bar-Gif-Transparent-Loading-Gif-.gif"
+                            alt=""
+                            style={{ width: "15vh", marginTop: "50%", marginRight: "30%" }}
+                        />
+                    </div>
+                )}
+                {(searchMutualFundList.length > 0 || mutualFundList.length > 0) && <input className="search_input_style" placeholder="Search by Scheme Name" onChange={this.searchOnChange} />}
                 <div
                     style={cardContainer}
                 >
+
                     {(searchMutualFundList.length > 0 ? searchMutualFundList : mutualFundList).map((fund, index) => (
                         index < 5 && <Card key={Math.random()} mutualFundDetailsContent={fund} />
                     ))}
 
                 </div>
-                {/* {mutualFundList.map((fund, index) => (
-                    index < 5 && <Card mutualFundDetailsContent={fund} key={Math.random()} />
-                ))} */}
+
             </div>
         );
     }
 }
 
 export default Home;
-
-const searchInputStyle = {
-    width: "70%",
-    height: "40px",
-    margin: "30px 15%",
-    padding: "0px 10px",
-    backgroundColor: "#d3d3d3",
-    border: "1px solid black",
-    outline: "none",
-    fontSize: "24px",
-    borderRadius: "5px"
-
-};
 
 
 const cardContainer = {
