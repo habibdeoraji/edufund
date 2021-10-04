@@ -75,9 +75,8 @@
 /* --------- */
 
 .signup_form {
-    /* background-image: url('../../utils/background_signup3.jpg'); */
     background: linear-gradient(#dafcea, rgb(178, 180, 178));
-    height: 100vh;
+    min-height: 100vh;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -90,6 +89,7 @@
     padding: 10px;
     margin: 5vh auto;
     height: 40vh;
+    min-height: 220px;
     border: 1px solid white;
     border-radius: 10px;
     background-color: rgb(252, 252, 252);
